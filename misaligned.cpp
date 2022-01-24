@@ -27,9 +27,8 @@ int printColorMap() {
 
     for(i = 0; i < 5; i++) {
         for(j = 0; j < 5; j++) {
-
             printColorCode(i,j);
-       }
+        }
     }
     return i * j;
 }
@@ -46,5 +45,4 @@ int main() {
     std::cout << "All is well (maybe!)\n";
 
     return 0;
-
 }
