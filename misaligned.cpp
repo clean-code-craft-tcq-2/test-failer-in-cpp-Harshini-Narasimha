@@ -12,6 +12,7 @@ int getColorPairNumber(int majorColorIndex, int minorColorIndex)
 
 std::string getColorPairString(int majorColorIndex, int minorColorIndex)
 {
+    std::cout<<"majorColorIndex:"<<majorColorIndex<<",minorColorIndex:"<<minorColorIndex<<"\n";
     std::string majorColorName(majorColor[majorColorIndex]);
     std::string minorColorName(minorColor[majorColorIndex]);
     return majorColorName.append(" | ").append(minorColorName);
