@@ -1,32 +1,51 @@
 #include <iostream>
 #include <assert.h>
 
+#define NETWORKALERTSUCCESS 200
+#define NETWORKALERTFAILURE 0
+#define THRESHLOADTEMPERATURE 200.0
+
 int alertFailureCount = 0;
 
-int networkAlertStub(float celcius) {
-    std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
-    // Return 200 for ok
-    // Return 500 for not-ok
-    // stub always succeeds and returns 200
-    return 200;
-}
+class networkAlerterInterface{
+    public:
+       virtual int networkAlert(float celcius)=0;
+};
 
-void alertInCelcius(float farenheit) {
+class networkAlerter: public networkAlerterInterface{
+     public:
+        int networkAlert(float celcius)
+        {
+             if(celcius>THRESHLOADTEMPERATURE)
+             {
+                return NETWORKALERTSUCCESS;
+              }
+              return NETWORKALERTFAILURE;
+        }
+};
+     
+class networkAlerterStub: public networkAlerterInterface{
+     public:
+int networkAlert(float celcius) {
+    std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
+    return NETWORKALERTSUCCESS;
+}
+};
+
+void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStatus) {
     float celcius = (farenheit - 32) * 5 / 9;
-    int returnCode = networkAlertStub(celcius);
-    if (returnCode != 200) {
-        // non-ok response is not an error! Issues happen in life!
-        // let us keep a count of failures to report
-        // However, this code doesn't count failures!
-        // Add a test below to catch this bug. Alter the stub above, if needed.
+    int returnCode = networkAlerterStatus.networkAlert(celcius);
+
+    if (returnCode != NETWORKALERTSUCCESS) {
         alertFailureCount += 0;
     }
 }
 
+
 int main() {
-    alertInCelcius(400.5);
-    alertInCelcius(303.6);
-    alertInCelcius(480.0);
+    networkAlerterStub testAlertInCelcius;
+    alertInCelcius(400.5,testAlertInCelcius);
+    alertInCelcius(303.6,testAlertInCelcius);
     assert(alertFailureCount == 1);
     std::cout << alertFailureCount << " alerts failed.\n";
     std::cout << "All is well (maybe!)\n";
