@@ -2,7 +2,7 @@
 #include <assert.h>
 
 #define NETWORKALERTSUCCESS 200
-#define NETWORKALERTFAILURE 0
+#define NETWORKALERTFAILURE 500
 #define THRESHLOADTEMPERATURE 200.0
 
 int alertFailureCount = 0;
@@ -28,8 +28,12 @@ class networkAlerterStub: public networkAlerterInterface{
      public:
 int networkAlert(float celcius) {
     std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
-    return NETWORKALERTSUCCESS;
-}
+    if(celcius>THRESHLOADTEMPERATURE)
+    {
+         return NETWORKALERTSUCCESS;
+    }
+         return NETWORKALERTFAILURE;        
+    }
 };
 
 void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStatus) {
