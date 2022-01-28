@@ -18,7 +18,7 @@ class networkAlerter: public networkAlerterInterface{
         {
             std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
             bool isNetworkAccessAvailable=false;
-            //Check the network access available and set the variable isNetworkAccessAvailable accordingly
+            //TODO:Check the network access available and set the variable isNetworkAccessAvailable accordingly
              if(isNetworkAccessAvailable)
              {
                 return NETWORKALERTSUCCESS;
@@ -29,7 +29,7 @@ class networkAlerter: public networkAlerterInterface{
      
 class networkAlerterStub: public networkAlerterInterface{
      public:
-int networkAlert(float celcius) {
+    int networkAlert(float celcius) {
     std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
     if(celcius>THRESHLOADTEMPERATURE)
     {
@@ -39,8 +39,12 @@ int networkAlert(float celcius) {
     }
 };
 
+float convertFarenheitToCelcius(float farenheit) {
+    return (farenheit - 32) * 5 / 9;
+}
+
 void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStatus) {
-    float celcius = (farenheit - 32) * 5 / 9;
+    float celcius = convertFarenheitToCelcius(farenheit);
     int returnCode = networkAlerterStatus.networkAlert(celcius);
 
     if (returnCode != NETWORKALERTSUCCESS) {
@@ -48,13 +52,13 @@ void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStat
     }
 }
 
-
 int main() {
     networkAlerterStub testAlertInCelcius;
+    assert(convertFarenheitToCelcius(400.5),204.7);
     alertInCelcius(400.5,testAlertInCelcius);
+    assert(alertFailureCount == 0);
+    assert(convertFarenheitToCelcius(303.6),150.8);
     alertInCelcius(303.6,testAlertInCelcius);
     assert(alertFailureCount == 1);
-    std::cout << alertFailureCount << " alerts failed.\n";
-    std::cout << "All is well (maybe!)\n";
     return 0;
 }
