@@ -16,7 +16,7 @@ class networkAlerter: public networkAlerterInterface{
      public:
         int networkAlert(float celcius)
         {
-             if(celcius>THRESHLOADTEMPERATURE)
+             if(/*network access available*/)
              {
                 return NETWORKALERTSUCCESS;
               }
