@@ -54,10 +54,10 @@ void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStat
 
 int main() {
     networkAlerterStub testAlertInCelcius;
-    assert(convertFarenheitToCelcius(400.5),204.7);
+    assert(convertFarenheitToCelcius(400.5) == 204.7);
     alertInCelcius(400.5,testAlertInCelcius);
     assert(alertFailureCount == 0);
-    assert(convertFarenheitToCelcius(303.6),150.8);
+    assert(convertFarenheitToCelcius(303.6) == 150.8);
     alertInCelcius(303.6,testAlertInCelcius);
     assert(alertFailureCount == 1);
     return 0;
