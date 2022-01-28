@@ -21,7 +21,7 @@ std::string getColorPairString(int majorColorIndex, int minorColorIndex)
 
 void printColorCode(int majorColorIndex, int minorColorIndex, std::vector<std::string> & colorCoderList)
 {
-   colorCoderList.push_back(std::to_string(getColorPairNumber(majorColorIndex,minorColorIndex)).append(" | ").append(getColorPairString(majorColorIndex,majorColorIndex)).append("\n");
+   colorCoderList.push_back(std::to_string(getColorPairNumber(majorColorIndex,minorColorIndex)).append(" | ").append(getColorPairString(majorColorIndex,majorColorIndex)).append("\n"));
    std::cout << colorCoderList.back();
 }
 
@@ -38,8 +38,8 @@ int printColorMap(std::vector<std::string> & colorCoderList) {
 
 int main() {
 
-    int result = printColorMap();
-
+    std::vector<std::string> colorCodedList;
+    int result = printColorMap(colorCodedList);
     assert(result == 25);
     assert(getColorPairNumber(0,4) == 4);
     assert(getColorPairString(0,0) == "White | Blue");
