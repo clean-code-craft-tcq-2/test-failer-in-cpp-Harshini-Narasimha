@@ -15,7 +15,7 @@ std::string getColorPairString(int majorColorIndex, int minorColorIndex)
 {
     std::cout<<"majorColorIndex:"<<majorColorIndex<<",minorColorIndex:"<<minorColorIndex<<"\n";
     std::string majorColorName(majorColor[majorColorIndex]);
-    std::string minorColorName(minorColor[majorColorIndex]);
+    std::string minorColorName(minorColor[minorColorIndex]);
     return majorColorName.append(" | ").append(minorColorName);
 }
 
@@ -28,8 +28,8 @@ void printColorCode(int majorColorIndex, int minorColorIndex, std::vector<std::s
 int printColorMap(std::vector<std::string> & colorCoderList) {
     int i = 0, j = 0;
 
-    for(i = 1; i <= 5; i++) {
-        for(j = 1; j <= 5; j++) {
+    for(i = 0; i <= 5; i++) {
+        for(j = 0; j <= 5; j++) {
             printColorCode(i,j,colorCoderList);
         }
     }
