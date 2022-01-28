@@ -1,5 +1,6 @@
 #include <iostream>
 #include <assert.h>
+#include <vector>
 
 const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
 
