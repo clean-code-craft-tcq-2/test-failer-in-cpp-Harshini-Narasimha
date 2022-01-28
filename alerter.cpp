@@ -17,7 +17,9 @@ class networkAlerter: public networkAlerterInterface{
         int networkAlert(float celcius)
         {
             std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
-             if(/*network access available*/)
+            bool isNetworkAccessAvailable=false;
+            //Check the network access available and set the variable isNetworkAccessAvailable accordingly
+             if(isNetworkAccessAvailable)
              {
                 return NETWORKALERTSUCCESS;
               }
