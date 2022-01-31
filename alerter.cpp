@@ -26,7 +26,7 @@ class networkAlerter: public networkAlerterInterface{
               return NETWORKALERTFAILURE;
         }
 };
-     
+
 class networkAlerterStub: public networkAlerterInterface{
      public:
     int networkAlert(float celcius) {
@@ -39,25 +39,24 @@ class networkAlerterStub: public networkAlerterInterface{
     }
 };
 
-float convertFarenheitToCelcius(float farenheit) {
+int convertFarenheitToCelcius(float farenheit) {
     return (farenheit - 32) * 5 / 9;
 }
 
 void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStatus) {
-    float celcius = convertFarenheitToCelcius(farenheit);
-    int returnCode = networkAlerterStatus.networkAlert(celcius);
-
+    int celcius = convertFarenheitToCelcius(farenheit);
+    int returnCode = networkAlerterStatus.networkAlert((float)celcius);
     if (returnCode != NETWORKALERTSUCCESS) {
-        alertFailureCount += 0;
+        alertFailureCount += 1;
     }
 }
 
 int main() {
     networkAlerterStub testAlertInCelcius;
-    assert(convertFarenheitToCelcius(400.5) == 204.7);
+    assert(convertFarenheitToCelcius(400.5) == 204);
     alertInCelcius(400.5,testAlertInCelcius);
     assert(alertFailureCount == 0);
-    assert(convertFarenheitToCelcius(303.6) == 150.8);
+    assert(convertFarenheitToCelcius(303.6) == 150);
     alertInCelcius(303.6,testAlertInCelcius);
     assert(alertFailureCount == 1);
     return 0;
