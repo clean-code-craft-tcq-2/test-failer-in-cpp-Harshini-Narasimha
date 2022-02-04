@@ -51,12 +51,12 @@ void alertInCelcius(float farenheit, INetworkAlerterInterface &networkAlerterSta
     }
 }
 
-testconvertFarenheitToCelcius(float farenheit, int expectedCelcius)
+void testconvertFarenheitToCelcius(float farenheit, int expectedCelcius)
 {
     assert(convertFarenheitToCelcius(farenheit) == expectedCelcius);
 }
 
-testAlertFailure(float farenheit, int expectedFailureCount)
+void testAlertFailure(float farenheit, int expectedFailureCount)
 {
     networkAlerterStub testAlertInCelcius;
     alertInCelcius(farenheit,testAlertInCelcius);
