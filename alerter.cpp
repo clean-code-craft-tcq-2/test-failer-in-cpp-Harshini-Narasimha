@@ -7,12 +7,12 @@
 
 int alertFailureCount = 0;
 
-class networkAlerterInterface{
+class INetworkAlerterInterface{
     public:
        virtual int networkAlert(float celcius)=0;
 };
 
-class networkAlerter: public networkAlerterInterface{
+class networkAlerter: public INetworkAlerterInterface{
      public:
         int networkAlert(float celcius)
         {
@@ -27,7 +27,7 @@ class networkAlerter: public networkAlerterInterface{
         }
 };
 
-class networkAlerterStub: public networkAlerterInterface{
+class networkAlerterStub: public INetworkAlerterInterface{
      public:
     int networkAlert(float celcius) {
     std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
@@ -43,7 +43,7 @@ int convertFarenheitToCelcius(float farenheit) {
     return (farenheit - 32) * 5 / 9;
 }
 
-void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStatus) {
+void alertInCelcius(float farenheit, INetworkAlerterInterface &networkAlerterStatus) {
     int celcius = convertFarenheitToCelcius(farenheit);
     int returnCode = networkAlerterStatus.networkAlert((float)celcius);
     if (returnCode != NETWORKALERTSUCCESS) {
@@ -51,13 +51,24 @@ void alertInCelcius(float farenheit, networkAlerterInterface &networkAlerterStat
     }
 }
 
-int main() {
+testconvertFarenheitToCelcius(float farenheit, int expectedCelcius)
+{
+    assert(convertFarenheitToCelcius(farenheit) == expectedCelcius);
+}
+
+testAlertFailure(float farenheit, int expectedFailureCount)
+{
     networkAlerterStub testAlertInCelcius;
-    assert(convertFarenheitToCelcius(400.5) == 204);
-    alertInCelcius(400.5,testAlertInCelcius);
-    assert(alertFailureCount == 0);
-    assert(convertFarenheitToCelcius(303.6) == 150);
+    alertInCelcius(farenheit,testAlertInCelcius);
+    assert(alertFailureCount == expectedFailureCount);
+}
+
+int main() {
+    
+    testconvertFarenheitToCelcius(400.5,204);
+    testAlertFailure(400.5,0);
+    testconvertFarenheitToCelcius(303.6,150);
     alertInCelcius(303.6,testAlertInCelcius);
-    assert(alertFailureCount == 1);
+    testAlertFailure(303.6, 1);
     return 0;
 }
