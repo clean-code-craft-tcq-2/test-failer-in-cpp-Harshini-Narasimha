@@ -68,7 +68,6 @@ int main() {
     testconvertFarenheitToCelcius(400.5,204);
     testAlertFailure(400.5,0);
     testconvertFarenheitToCelcius(303.6,150);
-    alertInCelcius(303.6,testAlertInCelcius);
     testAlertFailure(303.6, 1);
     return 0;
 }
